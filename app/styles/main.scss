@@ -9,6 +9,34 @@ $headline-color: #555;
   -ms-border-radius: $radius;
   border-radius: $radius;
 }
+
+@mixin my_animation($keyframes, $dur, $time) {
+  -webkit-animation: $keyframes $dur $time linear forwards; /* Safari 4+ */
+  -moz-animation:    $keyframes $dur $time linear forwards; /* Fx 5+ */
+  -o-animation:      $keyframes $dur $time linear forwards; /* Opera 12+ */
+  animation:         $keyframes $dur $time linear forwards; /* IE 10+, Fx 29+ */
+}
+
+@mixin translately($x, $y, $z, $sx, $sy) {
+  -webkit-transform: translate3d($x, $y, $z) scale($sx, $sy);
+  -moz-transform: translate3d($x, $y, $z) scale($sx, $sy);
+  -o-transform: translate3d($x, $y, $z) scale($sx, $sy);
+  -ms-transform: translate3d($x, $y, $z) scale($sx, $sy);
+  transform: translate3d($x, $y, $z) scale($sx, $sy);
+}
+
+
+@mixin shadow($dur) {
+    -webkit-box-shadow: 3px 9px 16px 10px #444;
+    -moz-box-shadow: 3px 9px 16px 10px #444;
+    box-shadow: 3px 9px 16px 10px #444;
+    -webkit-transition: all $dur linear;
+    -o-transition: all $dur linear;
+    -moz-transition: all $dur linear;
+    -ms-transition: all $dur linear;
+    transition: all $dur linear;
+}
+
 // bower:scss
 @import '../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss';
 // endbower
@@ -103,11 +131,133 @@ table {
 .modal-window .modal-wrapper .modal-layout .modal-content h1 {
   font: 18px "Arial Black", "Arial Bold", Gadget, sans-serif;
 }
+$duration: .2s;
+
+.shadow {
+  @include shadow($duration/2);
+}
 
 /* Views
 -------------------------------------------------- */
 .view-home {
   text-align:center;
+  .item {
+    h1 {
+      text-align: left;
+      font-size: 96px;
+      color:white;
+    }
+    margin-bottom: 2px;
+    width: 100%;
+    height: 180px;
+    background-color: red;
+    -webkit-transition: all $duration/2 linear;
+    -o-transition: all $duration/2 linear;
+    -moz-transition: all $duration/2 linear;
+    -ms-transition: all $duration/2 linear;
+    transition: all $duration/2 linear;
+    &:nth-of-type(even) {
+      background-color: blue;
+    }
+    &.movedown {
+      @include my_animation(swapdown, $duration, 1);
+    }
+
+    &.moveup {
+      @include my_animation(swapup, $duration, 1);
+    }
+  }
+
+}
+
+@-o-keyframes swapdown {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, 150px, -20px, 0.88, 0.88);
+  }
+  100% {
+    @include translately(0, 200px, 0, 1, 1);
+  }
+}
+@-o-keyframes swapup {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, 150px, -20px, 0.88, 0.88);
+  }
+  100% {
+    @include translately(0, 200px, 0, 1, 1);
+  }
+}
+
+@-moz-keyframes swapdown {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, 150px, -20px, 0.88, 0.88);
+  }
+  100% {
+    @include translately(0, 200px, 0, 1, 1);
+  }
+}
+@-moz-keyframes swapup {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, 150px, -20px, 0.88, 0.88);
+  }
+  100% {
+    @include translately(0, 200px, 0, 1, 1);
+  }
+}
+@-webkit-keyframes swapdown {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, 150px, -20px, 0.88, 0.88);
+  }
+  100% {
+    @include translately(0, 200px, 0, 1, 1);
+  }
+}
+@-webkit-keyframes swapup {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, -150px, 20px, 0.99, 0.99);
+  }
+  100% {
+    @include translately(0, -200px, 0, 1, 1);
+  }
+}
+@keyframes swapdown {
+0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, -150px, 20px, 0.99, 0.99);
+  }
+  100% {
+    @include translately(0, -200px, 0, 1, 1);
+  }
+}
+@keyframes swapup {
+  0% {
+    @include translately(0,0,0,1,1);
+  }
+  75% {
+    @include translately(0, -150px, 20px, 0.99, 0.99);
+  }
+  100% {
+    @include translately(0, -200px, 0, 1, 1);
+  }
 }
 
 /* Media Queries
@@ -129,6 +279,3 @@ table {
 @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) { }
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) { }
 @media (min-width: $screen-lg-min) { }
-
-
-
